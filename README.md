@@ -272,20 +272,16 @@ Example request generator module could look like this:
 
 ```javascript
 module.exports = function(params, options, client, callback) {
-  generateMessageAsync(function(message) {
+    var message = '{"hi": "ho"}';
 
-    if (message)
-    {
-      options.headers['Content-Length'] = message.length;
-      options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-    }
-    request = client(options, callback);
-    if (message){
-      request.write(message);
-    }
+    options.headers['Content-Length'] = message.length;
+    options.headers['Content-Type'] = 'application/json';
+
+    var request = client(options, callback);
+
+    request.write(message);
 
     return request;
-  }
 }
 ```
 
@@ -553,18 +549,15 @@ Example request generator function could look like this:
 
 ```javascript
 function(params, options, client, callback) {
-  generateMessageAsync(function(message)) {
+    var message = "Name=loadtest&Number=42";
+
     request = client(options, callback);
 
-    if (message)
-    {
-      options.headers['Content-Length'] = message.length;
-      options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-      request.write(message);
-    }
+    options.headers['Content-Length'] = message.length;
+    options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    request.write(message);
 
     request.end();
-  }
 }
 ```
 
